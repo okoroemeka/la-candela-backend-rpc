@@ -1,0 +1,49 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=mysecret
+      - POSTGRES_DB=la_candela
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - la_candela
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - la_candela
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "9080:9080"
+    networks:
+      - la_candela
+    environment:
+      - DB_SOURCE=postgresql://root:mysecret@postgres:5432/la_candela?sslmode=disable
+      - REDIS_ADDRESS=redis:6379
+    depends_on:
+      - postgres
+      - redis
+    entrypoint: ["/app/wait-for.sh", "postgres:5432", "--", "/app/start.sh"]
+    command: ["/app/main"]
+
+networks:
+  la_candela:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:

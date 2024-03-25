@@ -1,6 +1,9 @@
 package util
 
-import "time"
+import (
+	"github.com/spf13/viper"
+	"time"
+)
 
 type Config struct {
 	Environment          string        `mapstructure:"ENVIRONMENT"`
@@ -15,8 +18,23 @@ type Config struct {
 	EmailSenderName      string        `mapstructure:"EMAIL_SENDER_NAME"`
 	EmailSenderAddress   string        `mapstructure:"EMAIL_SENDER_ADDRESS"`
 	EmailSenderPassword  string        `mapstructure:"EMAIL_SENDER_PASSWORD"`
+	HTTPServerAddress    string        `mapstructure:"HTTP_SERVER_ADDRESS"`
+	GmailUsername        string        `mapstructure:"GMAIL_USERNAME"`
+	GmailPassword        string        `mapstructure:"GMAIL_PASSWORD"`
 }
 
 func LoadConfig(path string) (config Config, err error) {
+	viper.AddConfigPath(path)
+	viper.SetConfigName("app")
+	viper.SetConfigType("env")
 
+	viper.AutomaticEnv()
+
+	err = viper.ReadInConfig()
+	if err != nil {
+		return
+	}
+
+	err = viper.Unmarshal(&config)
+	return
 }

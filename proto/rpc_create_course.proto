@@ -1,0 +1,32 @@
+syntax="proto3";
+
+package pb;
+
+import "course.proto";
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/okoroemeka/la-candela-backend-rpc/pb";
+
+message CreateCourseRequest{
+  string id = 1;
+  string course_title = 2;
+  string course_level = 3;
+  google.protobuf.Timestamp start_date = 4;
+  google.protobuf.Timestamp end_date = 5;
+  google.protobuf.Timestamp start_time = 6;
+  google.protobuf.Timestamp end_time = 7;
+  int64 price = 8;
+  string location_id=9;
+  int32 min_capacity = 10;
+  bool open = 11;
+  string price_hike_id = 12;
+  google.protobuf.Timestamp created_at=13;
+  google.protobuf.Timestamp updated_at=14;
+  string created_by=15;
+  string  course_description = 16;
+}
+
+message CreateCourseResponse{
+ Course course=1;
+}
