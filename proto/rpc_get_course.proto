@@ -1,0 +1,15 @@
+syntax="proto3";
+
+package pb;
+
+import "course.proto";
+
+option go_package = "github.com/okoroemeka/la-candela-backend-rpc/pb";
+
+message GetCourseRequest{
+  string id = 1;
+}
+
+message GetCourseResponse{
+  Course course = 1;
+}

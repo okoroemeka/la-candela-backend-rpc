@@ -7,6 +7,7 @@ import "protoc-gen-openapiv2/options/annotations.proto";
 import "rpc_create_user.proto";
 import "rpc_login_user.proto";
 import "rpc_create_course.proto";
+import "rpc_get_course.proto";
 
 
 option go_package = "github.com/okoroemeka/la-candela-backend-rpc/pb";
@@ -47,6 +48,12 @@ service LaCandelaBackendRPC{
   rpc CreateCourse(CreateCourseRequest) returns (CreateCourseResponse){
     option(google.api.http) = {
       post:"/v1/create_course"
+      body: "*"
+    };
+  }
+  rpc GetCourse(GetCourseRequest) returns (GetCourseResponse){
+    option(google.api.http) = {
+      post:"/v1/get_course"
       body: "*"
     };
   }

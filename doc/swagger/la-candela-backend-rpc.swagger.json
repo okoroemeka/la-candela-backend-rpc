@@ -87,6 +87,38 @@
         ]
       }
     },
+    "/v1/get_course": {
+      "post": {
+        "operationId": "LaCandelaBackendRPC_GetCourse",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbGetCourseResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbGetCourseRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LaCandelaBackendRPC"
+        ]
+      }
+    },
     "/v1/login": {
       "post": {
         "summary": "login user",
@@ -275,6 +307,22 @@
       "properties": {
         "user": {
           "$ref": "#/definitions/pbUser"
+        }
+      }
+    },
+    "pbGetCourseRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "pbGetCourseResponse": {
+      "type": "object",
+      "properties": {
+        "course": {
+          "$ref": "#/definitions/pbCourse"
         }
       }
     },

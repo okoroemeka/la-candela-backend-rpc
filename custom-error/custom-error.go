@@ -11,6 +11,7 @@ import (
 const (
 	UniqueViolation     = "23505"
 	ForeignKeyViolation = "25503"
+	NoRowFound          = "02000"
 )
 
 func ErrorCode(err error) string {
