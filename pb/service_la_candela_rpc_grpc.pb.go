@@ -25,6 +25,7 @@ type LaCandelaBackendRPCClient interface {
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	LoginUser(ctx context.Context, in *LoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error)
 	CreateCourse(ctx context.Context, in *CreateCourseRequest, opts ...grpc.CallOption) (*CreateCourseResponse, error)
+	GetCourse(ctx context.Context, in *GetCourseRequest, opts ...grpc.CallOption) (*GetCourseResponse, error)
 }
 
 type laCandelaBackendRPCClient struct {
@@ -62,6 +63,15 @@ func (c *laCandelaBackendRPCClient) CreateCourse(ctx context.Context, in *Create
 	return out, nil
 }
 
+func (c *laCandelaBackendRPCClient) GetCourse(ctx context.Context, in *GetCourseRequest, opts ...grpc.CallOption) (*GetCourseResponse, error) {
+	out := new(GetCourseResponse)
+	err := c.cc.Invoke(ctx, "/pb.LaCandelaBackendRPC/GetCourse", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LaCandelaBackendRPCServer is the server API for LaCandelaBackendRPC service.
 // All implementations must embed UnimplementedLaCandelaBackendRPCServer
 // for forward compatibility
@@ -69,6 +79,7 @@ type LaCandelaBackendRPCServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error)
 	CreateCourse(context.Context, *CreateCourseRequest) (*CreateCourseResponse, error)
+	GetCourse(context.Context, *GetCourseRequest) (*GetCourseResponse, error)
 	mustEmbedUnimplementedLaCandelaBackendRPCServer()
 }
 
@@ -84,6 +95,9 @@ func (UnimplementedLaCandelaBackendRPCServer) LoginUser(context.Context, *LoginU
 }
 func (UnimplementedLaCandelaBackendRPCServer) CreateCourse(context.Context, *CreateCourseRequest) (*CreateCourseResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCourse not implemented")
+}
+func (UnimplementedLaCandelaBackendRPCServer) GetCourse(context.Context, *GetCourseRequest) (*GetCourseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCourse not implemented")
 }
 func (UnimplementedLaCandelaBackendRPCServer) mustEmbedUnimplementedLaCandelaBackendRPCServer() {}
 
@@ -152,6 +166,24 @@ func _LaCandelaBackendRPC_CreateCourse_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LaCandelaBackendRPC_GetCourse_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCourseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LaCandelaBackendRPCServer).GetCourse(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.LaCandelaBackendRPC/GetCourse",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LaCandelaBackendRPCServer).GetCourse(ctx, req.(*GetCourseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LaCandelaBackendRPC_ServiceDesc is the grpc.ServiceDesc for LaCandelaBackendRPC service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,6 +202,10 @@ var LaCandelaBackendRPC_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateCourse",
 			Handler:    _LaCandelaBackendRPC_CreateCourse_Handler,
+		},
+		{
+			MethodName: "GetCourse",
+			Handler:    _LaCandelaBackendRPC_GetCourse_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
