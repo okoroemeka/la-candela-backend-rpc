@@ -31,8 +31,7 @@ SET
     location_id = coalesce(sqlc.narg(location_id), location_id),
     min_capacity = coalesce(sqlc.narg(min_capacity), min_capacity),
     open = coalesce(sqlc.narg(open), open),
-    price_hike_id = coalesce(sqlc.narg(price_hike_id), price_hike_id),
-    created_by = coalesce(sqlc.narg(created_by), created_by)
+    price_hike_id = coalesce(sqlc.narg(price_hike_id), price_hike_id)
 WHERE
     id = sqlc.arg(id)
 RETURNING *;
@@ -40,3 +39,4 @@ RETURNING *;
 -- name: DeleteCourse :exec
     DELETE FROM course WHERE id = sqlc.arg(id);
 
+--     created_by = coalesce(sqlc.narg(created_by), created_by)

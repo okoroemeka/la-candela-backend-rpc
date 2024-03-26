@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/okoroemeka/la-candela-backend-rpc/pb";
+
+message DeleteCourseRequest{
+  string id=1;
+}
+
+message DeleteCourseResponse {
+  string message=1;
+}

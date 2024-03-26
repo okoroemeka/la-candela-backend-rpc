@@ -174,10 +174,9 @@ SET
     location_id = coalesce($9, location_id),
     min_capacity = coalesce($10, min_capacity),
     open = coalesce($11, open),
-    price_hike_id = coalesce($12, price_hike_id),
-    created_by = coalesce($13, created_by)
+    price_hike_id = coalesce($12, price_hike_id)
 WHERE
-    id = $14
+    id = $13
 RETURNING id, course_title, course_description, course_level, start_date, end_date, start_time, end_time, price, location_id, min_capacity, open, price_hike_id, created_by, created_at, updated_at
 `
 
@@ -194,7 +193,6 @@ type UpdateCourseParams struct {
 	MinCapacity       pgtype.Int8        `json:"min_capacity"`
 	Open              pgtype.Bool        `json:"open"`
 	PriceHikeID       pgtype.UUID        `json:"price_hike_id"`
-	CreatedBy         pgtype.UUID        `json:"created_by"`
 	ID                uuid.UUID          `json:"id"`
 }
 
@@ -212,7 +210,6 @@ func (q *Queries) UpdateCourse(ctx context.Context, arg UpdateCourseParams) (Cou
 		arg.MinCapacity,
 		arg.Open,
 		arg.PriceHikeID,
-		arg.CreatedBy,
 		arg.ID,
 	)
 	var i Course

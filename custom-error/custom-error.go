@@ -11,7 +11,7 @@ import (
 const (
 	UniqueViolation     = "23505"
 	ForeignKeyViolation = "25503"
-	NoRowFound          = "02000"
+	NoRowFound          = "no rows in result set"
 )
 
 func ErrorCode(err error) string {

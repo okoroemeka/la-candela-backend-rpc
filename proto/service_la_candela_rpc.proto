@@ -8,6 +8,8 @@ import "rpc_create_user.proto";
 import "rpc_login_user.proto";
 import "rpc_create_course.proto";
 import "rpc_get_course.proto";
+import "rpc_delete_course.proto";
+import "rpc_update_course.proto";
 
 
 option go_package = "github.com/okoroemeka/la-candela-backend-rpc/pb";
@@ -54,6 +56,18 @@ service LaCandelaBackendRPC{
   rpc GetCourse(GetCourseRequest) returns (GetCourseResponse){
     option(google.api.http) = {
       post:"/v1/get_course"
+      body: "*"
+    };
+  }
+  rpc DeleteCourse(DeleteCourseRequest) returns (DeleteCourseResponse){
+    option(google.api.http) = {
+      post:"/v1/delete_course"
+      body: "*"
+    };
+  }
+  rpc UpdateCourse(UpdateCourseRequest) returns (UpdateCourseResponse){
+    option(google.api.http) = {
+      post:"/v1/update_course"
       body: "*"
     };
   }

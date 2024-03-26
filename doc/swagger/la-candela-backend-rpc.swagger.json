@@ -87,6 +87,38 @@
         ]
       }
     },
+    "/v1/delete_course": {
+      "post": {
+        "operationId": "LaCandelaBackendRPC_DeleteCourse",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbDeleteCourseResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbDeleteCourseRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LaCandelaBackendRPC"
+        ]
+      }
+    },
     "/v1/get_course": {
       "post": {
         "operationId": "LaCandelaBackendRPC_GetCourse",
@@ -145,6 +177,38 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/pbLoginUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LaCandelaBackendRPC"
+        ]
+      }
+    },
+    "/v1/update_course": {
+      "post": {
+        "operationId": "LaCandelaBackendRPC_UpdateCourse",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbUpdateCourseResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbUpdateCourseRequest"
             }
           }
         ],
@@ -310,6 +374,22 @@
         }
       }
     },
+    "pbDeleteCourseRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "pbDeleteCourseResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
     "pbGetCourseRequest": {
       "type": "object",
       "properties": {
@@ -342,6 +422,73 @@
       "properties": {
         "user": {
           "$ref": "#/definitions/pbUser"
+        }
+      }
+    },
+    "pbUpdateCourseRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "courseTitle": {
+          "type": "string"
+        },
+        "courseLevel": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "startTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "price": {
+          "type": "string",
+          "format": "int64"
+        },
+        "locationId": {
+          "type": "string"
+        },
+        "minCapacity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "open": {
+          "type": "boolean"
+        },
+        "priceHikeId": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "courseDescription": {
+          "type": "string",
+          "title": "optional string created_by=15;"
+        }
+      }
+    },
+    "pbUpdateCourseResponse": {
+      "type": "object",
+      "properties": {
+        "course": {
+          "$ref": "#/definitions/pbCourse"
         }
       }
     },
