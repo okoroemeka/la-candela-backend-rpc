@@ -83,6 +83,7 @@ func ValidateUuid(id string) error {
 	}
 	return nil
 }
+
 func GetFutureDateInUnix(dateStr, layout string) (int64, error) {
 	date, err := time.Parse(layout, dateStr)
 	if err != nil {

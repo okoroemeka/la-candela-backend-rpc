@@ -15,7 +15,7 @@ import (
 const createUser = `-- name: CreateUser :one
 INSERT INTO "user"
     ("id","first_name","last_name","email","password")
-values($1,$2,$3,$4,$5) RETURNING id, email, is_verified, password, password_changed_at, user_role, created_at, updated_at, first_name, last_name
+values($1,$2,$3,$4,$5) RETURNING id, first_name, last_name, email, is_verified, password, password_changed_at, user_role, created_at, updated_at
 `
 
 type CreateUserParams struct {
@@ -37,6 +37,8 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 	var i User
 	err := row.Scan(
 		&i.ID,
+		&i.FirstName,
+		&i.LastName,
 		&i.Email,
 		&i.IsVerified,
 		&i.Password,
@@ -44,14 +46,12 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 		&i.UserRole,
 		&i.CreatedAt,
 		&i.UpdatedAt,
-		&i.FirstName,
-		&i.LastName,
 	)
 	return i, err
 }
 
 const getUser = `-- name: GetUser :one
-SELECT id, email, is_verified, password, password_changed_at, user_role, created_at, updated_at, first_name, last_name FROM "user" WHERE "email"=$1
+SELECT id, first_name, last_name, email, is_verified, password, password_changed_at, user_role, created_at, updated_at FROM "user" WHERE "email"=$1
 `
 
 func (q *Queries) GetUser(ctx context.Context, email string) (User, error) {
@@ -59,6 +59,8 @@ func (q *Queries) GetUser(ctx context.Context, email string) (User, error) {
 	var i User
 	err := row.Scan(
 		&i.ID,
+		&i.FirstName,
+		&i.LastName,
 		&i.Email,
 		&i.IsVerified,
 		&i.Password,
@@ -66,8 +68,6 @@ func (q *Queries) GetUser(ctx context.Context, email string) (User, error) {
 		&i.UserRole,
 		&i.CreatedAt,
 		&i.UpdatedAt,
-		&i.FirstName,
-		&i.LastName,
 	)
 	return i, err
 }
@@ -85,7 +85,7 @@ SET
     updated_at = coalesce($8,updated_at)
 WHERE
     id = $9
-RETURNING id, email, is_verified, password, password_changed_at, user_role, created_at, updated_at, first_name, last_name
+RETURNING id, first_name, last_name, email, is_verified, password, password_changed_at, user_role, created_at, updated_at
 `
 
 type UpdateUserParams struct {
@@ -115,6 +115,8 @@ func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, e
 	var i User
 	err := row.Scan(
 		&i.ID,
+		&i.FirstName,
+		&i.LastName,
 		&i.Email,
 		&i.IsVerified,
 		&i.Password,
@@ -122,14 +124,12 @@ func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, e
 		&i.UserRole,
 		&i.CreatedAt,
 		&i.UpdatedAt,
-		&i.FirstName,
-		&i.LastName,
 	)
 	return i, err
 }
 
 const verifyUser = `-- name: VerifyUser :one
-UPDATE "user" SET "is_verified"=$1 WHERE "id"=$2 RETURNING id, email, is_verified, password, password_changed_at, user_role, created_at, updated_at, first_name, last_name
+UPDATE "user" SET "is_verified"=$1 WHERE "id"=$2 RETURNING id, first_name, last_name, email, is_verified, password, password_changed_at, user_role, created_at, updated_at
 `
 
 type VerifyUserParams struct {
@@ -142,6 +142,8 @@ func (q *Queries) VerifyUser(ctx context.Context, arg VerifyUserParams) (User, e
 	var i User
 	err := row.Scan(
 		&i.ID,
+		&i.FirstName,
+		&i.LastName,
 		&i.Email,
 		&i.IsVerified,
 		&i.Password,
@@ -149,14 +151,12 @@ func (q *Queries) VerifyUser(ctx context.Context, arg VerifyUserParams) (User, e
 		&i.UserRole,
 		&i.CreatedAt,
 		&i.UpdatedAt,
-		&i.FirstName,
-		&i.LastName,
 	)
 	return i, err
 }
 
 const getAllUsers = `-- name: getAllUsers :many
-SELECT id, email, is_verified, password, password_changed_at, user_role, created_at, updated_at, first_name, last_name FROM "user"
+SELECT id, first_name, last_name, email, is_verified, password, password_changed_at, user_role, created_at, updated_at FROM "user"
 `
 
 func (q *Queries) getAllUsers(ctx context.Context) ([]User, error) {
@@ -170,6 +170,8 @@ func (q *Queries) getAllUsers(ctx context.Context) ([]User, error) {
 		var i User
 		if err := rows.Scan(
 			&i.ID,
+			&i.FirstName,
+			&i.LastName,
 			&i.Email,
 			&i.IsVerified,
 			&i.Password,
@@ -177,8 +179,6 @@ func (q *Queries) getAllUsers(ctx context.Context) ([]User, error) {
 			&i.UserRole,
 			&i.CreatedAt,
 			&i.UpdatedAt,
-			&i.FirstName,
-			&i.LastName,
 		); err != nil {
 			return nil, err
 		}

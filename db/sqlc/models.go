@@ -223,6 +223,8 @@ type Teacher struct {
 
 type User struct {
 	ID                uuid.UUID          `json:"id"`
+	FirstName         string             `json:"first_name"`
+	LastName          string             `json:"last_name"`
 	Email             string             `json:"email"`
 	IsVerified        bool               `json:"is_verified"`
 	Password          string             `json:"password"`
@@ -230,8 +232,6 @@ type User struct {
 	UserRole          Role               `json:"user_role"`
 	CreatedAt         time.Time          `json:"created_at"`
 	UpdatedAt         pgtype.Timestamptz `json:"updated_at"`
-	FirstName         string             `json:"first_name"`
-	LastName          string             `json:"last_name"`
 }
 
 type VerifyEmail struct {
